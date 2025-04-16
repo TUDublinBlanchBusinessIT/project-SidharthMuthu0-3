@@ -51,3 +51,35 @@ CREATE TABLE Room (
     updated_at DATETIME,
     PRIMARY KEY(id)
 );
+
+INSERT INTO Guest (first_name, last_name, phone_number, email, national_id, created_at, updated_at)
+VALUES 
+('Oliver', 'Kerr', '0712345678', 'oliver.kerr@example.com', 'ID12345', NOW(), NOW()),
+('Morgan', 'Bartlett', '0723456789', 'morgan.bartlett@example.com', 'ID12346', NOW(), NOW()),
+('Rebecca', 'House', '0734567890', 'rebecca.house@example.com', 'ID12347', NOW(), NOW()),
+('Leslie', 'Hammond', '0745678901', 'leslie.hammond@example.com', 'ID12348', NOW(), NOW()),
+('Axel', 'Gibson', '0756789012', 'axel.gibson@example.com', 'ID12349', NOW(), NOW());
+
+
+INSERT INTO Staff (first_name, last_name, phone_number, email, created_at, updated_at)
+VALUES 
+('Bo', 'Bradshaw', '0767890123', 'bo.bradshaw@example.com', NOW(), NOW()),
+('Jamie', 'Wells', '0778901234', 'jamie.wells@example.com', NOW(), NOW()),
+('Kara', 'Nguyen', '0789012345', 'kara.nguyen@example.com', NOW(), NOW());
+
+
+INSERT INTO Room (room_number, room_type, price, is_available, created_at, updated_at)
+VALUES 
+(101, 'Single', 80.00, TRUE, NOW(), NOW()),
+(102, 'Double', 120.00, TRUE, NOW(), NOW()),
+(201, 'Suite', 200.00, TRUE, NOW(), NOW()),
+(202, 'Double', 120.00, FALSE, NOW(), NOW()),
+(301, 'Single', 80.00, TRUE, NOW(), NOW());
+
+INSERT INTO Booking (guest_id, room_number, check_in_date, check_out_date, payment_status, created_at, updated_at)
+VALUES 
+(1, 101, '2025-04-15', '2025-04-17', 'Paid', NOW(), NOW()),
+(2, 102, '2025-04-10', '2025-04-12', 'Pending', NOW(), NOW()),
+(3, 201, '2025-04-11', '2025-04-14', 'Paid', NOW(), NOW()),
+(4, 202, '2025-04-13', '2025-04-15', 'Cancelled', NOW(), NOW()),
+(5, 301, '2025-04-09', '2025-04-11', 'Paid', NOW(), NOW());
