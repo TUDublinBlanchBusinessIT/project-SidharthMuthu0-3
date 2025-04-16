@@ -13,3 +13,16 @@ CREATE TABLE Guest (
     deleted_at DATETIME,
     PRIMARY KEY(id)
 );
+
+CREATE TABLE Booking (
+    id INT AUTO_INCREMENT,
+    guest_id INT,
+    room_number INT,
+    check_in_date DATE,
+    check_out_date DATE,
+    payment_status ENUM('Pending', 'Paid', 'Cancelled') DEFAULT 'Pending',
+    created_at DATETIME,
+    updated_at DATETIME,
+    PRIMARY KEY(id),
+    FOREIGN KEY (guest_id) REFERENCES Guest(id)
+);
