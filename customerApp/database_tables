@@ -26,3 +26,16 @@ CREATE TABLE Booking (
     PRIMARY KEY(id),
     FOREIGN KEY (guest_id) REFERENCES Guest(id)
 );
+
+CREATE TABLE Staff (
+    id INT AUTO_INCREMENT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    position VARCHAR(50),
+    phone_number VARCHAR(15),
+    email VARCHAR(100),
+    hire_date DATE,
+    created_at DATETIME,
+    updated_at DATETIME,
+    PRIMARY KEY(id)
+);
