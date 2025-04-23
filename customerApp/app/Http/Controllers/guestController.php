@@ -9,10 +9,11 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use App\Models\Guest; // ✅ Make sure this is used if needed for direct model testing
 
 class guestController extends AppBaseController
 {
-    /** @var guestRepository $guestRepository*/
+    /** @var guestRepository $guestRepository */
     private $guestRepository;
 
     public function __construct(guestRepository $guestRepo)
@@ -24,12 +25,14 @@ class guestController extends AppBaseController
      * Display a listing of the guest.
      *
      * @param Request $request
-     *
      * @return Response
      */
     public function index(Request $request)
     {
         $guests = $this->guestRepository->all();
+
+        // DEBUG OPTION: Uncomment this line to test if data is loading
+        // dd($guests);
 
         return view('guests.index')
             ->with('guests', $guests);
@@ -49,7 +52,6 @@ class guestController extends AppBaseController
      * Store a newly created guest in storage.
      *
      * @param CreateguestRequest $request
-     *
      * @return Response
      */
     public function store(CreateguestRequest $request)
@@ -67,7 +69,6 @@ class guestController extends AppBaseController
      * Display the specified guest.
      *
      * @param int $id
-     *
      * @return Response
      */
     public function show($id)
@@ -76,7 +77,6 @@ class guestController extends AppBaseController
 
         if (empty($guest)) {
             Flash::error('Guest not found');
-
             return redirect(route('guests.index'));
         }
 
@@ -87,7 +87,6 @@ class guestController extends AppBaseController
      * Show the form for editing the specified guest.
      *
      * @param int $id
-     *
      * @return Response
      */
     public function edit($id)
@@ -96,7 +95,6 @@ class guestController extends AppBaseController
 
         if (empty($guest)) {
             Flash::error('Guest not found');
-
             return redirect(route('guests.index'));
         }
 
@@ -108,7 +106,6 @@ class guestController extends AppBaseController
      *
      * @param int $id
      * @param UpdateguestRequest $request
-     *
      * @return Response
      */
     public function update($id, UpdateguestRequest $request)
@@ -117,7 +114,6 @@ class guestController extends AppBaseController
 
         if (empty($guest)) {
             Flash::error('Guest not found');
-
             return redirect(route('guests.index'));
         }
 
@@ -132,9 +128,7 @@ class guestController extends AppBaseController
      * Remove the specified guest from storage.
      *
      * @param int $id
-     *
      * @throws \Exception
-     *
      * @return Response
      */
     public function destroy($id)
@@ -143,7 +137,6 @@ class guestController extends AppBaseController
 
         if (empty($guest)) {
             Flash::error('Guest not found');
-
             return redirect(route('guests.index'));
         }
 

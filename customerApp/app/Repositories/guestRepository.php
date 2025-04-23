@@ -2,15 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Models\guest;
+use App\Models\Guest; // ✅ Capital G — MUST match your model file
 use App\Repositories\BaseRepository;
 
 /**
  * Class guestRepository
  * @package App\Repositories
  * @version April 16, 2025, 2:42 pm UTC
-*/
-
+ */
 class guestRepository extends BaseRepository
 {
     /**
@@ -39,6 +38,6 @@ class guestRepository extends BaseRepository
      **/
     public function model()
     {
-        return guest::class;
+        return Guest::class; // ✅ Capital G — now Laravel will find it
     }
 }

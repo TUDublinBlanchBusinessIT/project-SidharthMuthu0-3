@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $email
  * @property string $national_id
  */
-class guest extends Model
+class Guest extends Model
 {
     use SoftDeletes;
 
