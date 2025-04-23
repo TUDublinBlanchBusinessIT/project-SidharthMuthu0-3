@@ -19,27 +19,38 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new user. (Not used in this case)
+     * Show the form for creating a new user.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
-     * Store a newly created user in storage. (Not used in this case)
+     * Store a newly created user in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:6',
+            'role' => 'required|in:user,admin,editor',
+        ]);
 
-    /**
-     * Display the specified user. (Not used in this case)
-     */
-    public function show($id)
-    {
-        //
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password), // Hash password
+            'role' => $request->role,
+        ]);
+
+        return redirect()->route('users.index')->with('success', 'New user created successfully!');
     }
 
     /**

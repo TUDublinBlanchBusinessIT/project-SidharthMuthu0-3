@@ -10,10 +10,17 @@
     <div class="container">
         <h1 class="mb-4">User Management</h1>
 
+        <!-- ✅ Create New User Button -->
+        <div class="mb-4 text-end">
+            <a href="{{ route('users.create') }}" class="btn btn-success">+ Add New User</a>
+        </div>
+
+        <!-- ✅ Success Message -->
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
+        <!-- ✅ User Table -->
         @if($users->count())
             <table class="table table-bordered table-hover bg-white shadow-sm">
                 <thead class="table-dark">
