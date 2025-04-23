@@ -28,3 +28,5 @@ Route::resource('staff', App\Http\Controllers\staffController::class);
 
 
 Route::resource('rooms', App\Http\Controllers\roomController::class);
+
+Route::resource('users', App\Http\Controllers\UserController::class); 
