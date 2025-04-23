@@ -1,30 +1,34 @@
-<table class="table table-responsive" id="guests-table">
-    <thead>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Phone Number</th>
-        <th>Email</th>
-        <th>National Id</th>
-        <th colspan="3">Action</th>
+<table class="table table-bordered table-hover align-middle text-center">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Full Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>National ID</th>
+            <th>Created</th>
+            <th>Actions</th>
+        </tr>
     </thead>
     <tbody>
-    @foreach($guests as $guest)
-        <tr>
-            <td>{!! $guest->first_name !!}</td>
-            <td>{!! $guest->last_name !!}</td>
-            <td>{!! $guest->phone_number !!}</td>
-            <td>{!! $guest->email !!}</td>
-            <td>{!! $guest->national_id !!}</td>
-            <td>
-                {!! Form::open(['route' => ['guests.destroy', $guest->id], 'method' => 'delete']) !!}
-                <div class='btn-group'>
-                    <a href="{!! route('guests.show', [$guest->id]) !!}" class='btn btn-default btn-xs'><i class="far fa-eye"></i></i></a>
-                    <a href="{!! route('guests.edit', [$guest->id]) !!}" class='btn btn-default btn-xs'><i class="far fa-edit"></i></i></a>
-                    {!! Form::button('<i class="far fa-trash-alt"></i></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
-                </div>
-                {!! Form::close() !!}
-            </td>
-        </tr>
-    @endforeach
+        @foreach($guests as $guest)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $guest->first_name }} {{ $guest->last_name }}</td>
+                <td>{{ $guest->phone_number }}</td>
+                <td>{{ $guest->email }}</td>
+                <td>{{ $guest->national_id }}</td>
+                <td>{{ $guest->created_at->format('Y-m-d') }}</td>
+                <td class="d-flex justify-content-center gap-2">
+                    <a href="{{ route('guests.edit', $guest->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                    <form method="POST" action="{{ route('guests.destroy', $guest->id) }}" onsubmit="return confirm('Are you sure?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        @endforeach
     </tbody>
 </table>
+
