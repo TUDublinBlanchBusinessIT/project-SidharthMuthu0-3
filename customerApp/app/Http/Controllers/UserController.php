@@ -3,25 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the users.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-    $users = \App\Models\User::all();
-    return view('users.index', compact('users'));
+        $users = User::all();
+        return view('users.index', compact('users'));
     }
 
-    
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Show the form for creating a new user. (Not used in this case)
      */
     public function create()
     {
@@ -29,10 +27,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created user in storage. (Not used in this case)
      */
     public function store(Request $request)
     {
@@ -40,10 +35,7 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Display the specified user. (Not used in this case)
      */
     public function show($id)
     {
@@ -51,18 +43,19 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified user's role.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('users.edit', compact('user'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified user's role in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -70,14 +63,16 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->update([
+            'role' => $request->role
+        ]);
+
+        return redirect()->route('users.index')->with('success', 'Role updated!');
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Remove the specified user from storage. (Optional)
      */
     public function destroy($id)
     {

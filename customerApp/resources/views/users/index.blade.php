@@ -12,18 +12,25 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
+                    <th>Name & Email</th>
+                    <th>Role</th>
                     <th>Created At</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($users as $user)
                     <tr>
                         <td>{{ $user->id }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
+                        <td>
+                            <strong>{{ $user->name }}</strong><br>
+                            <small>{{ $user->email }}</small>
+                        </td>
+                        <td>{{ ucfirst($user->role) }}</td>
                         <td>{{ $user->created_at->format('Y-m-d H:i') }}</td>
+                        <td>
+                            <a href="{{ route('users.edit', $user->id) }}">Edit Role</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
