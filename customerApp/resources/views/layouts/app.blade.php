@@ -1,51 +1,49 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{{ config('app.name') }}</title>
-        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ config('app.name', 'HotelApp') }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-              integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-              crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Bootstrap 5 -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    </head>
+    <!-- Font Awesome (Optional) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <body>
-        <!-- Bootstrap 5 Navbar -->
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-          <div class="container-fluid">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href=https://laravel.com/docs>Laravel Documentation</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href=https://laracasts.com/>Laravel Video Tutorials</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-        
-        <div id="page-content-wrapper"> 
-            <div class="container-fluid"> 
-                <div class="row">
-                    <!-- Well for left side of the page (to compensate for widescreen) -->
-                    <div class="col-lg-2"></div>
-                    <!-- Slot for content from Lower Level views with sections called 'content' pulled in here -->
-                    <div class="col-lg-8"> @yield('content') </div>
-                    <!-- Well for right side of the page (to compensate for widescreen) -->
-                    <div class="col-lg-2"></div> 
-                </div> 
-            </div> 
-        </div> 
+    <!-- Laravel CSS/JS Assets -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+</head>
+<body>
 
-        <!-- Webpack mix npm generated -->
-        <link rel="stylesheet" href="{{asset('css/app.css')}}"> 
-        <script src="{{asset('js/app.js')}}"></script>
-        @stack('js_scripts')
-    </body>
+    <!-- ✅ Modern Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{{ url('/') }}">{{ config('app.name', 'HotelApp') }}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Users</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('guests.index') }}">Guests</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('bookings.index') }}">Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('staff.index') }}">Staff</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('rooms.index') }}">Rooms</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        @yield('content')
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    @stack('js_scripts')
+</body>
 </html>
