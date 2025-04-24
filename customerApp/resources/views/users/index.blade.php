@@ -6,8 +6,20 @@
         <a href="{{ route('users.create') }}" class="btn btn-success">+ Add New User</a>
     </div>
 
+    {{-- 🟢 Success message (create/update) --}}
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    {{-- 🔴 Deleted message --}}
+    @if(session('deleted'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('deleted') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
 
     @if($users->count())

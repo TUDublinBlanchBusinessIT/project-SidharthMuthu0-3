@@ -83,13 +83,17 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified user from storage. (Optional)
+     * Remove the specified user from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        $user->delete(); // This will soft delete the user
-    
-        return redirect()->route('users.index')->with('success', 'User deleted successfully!');
+        $user->delete(); // Soft deletes the user
+
+        return redirect()->route('users.index')->with('deleted', 'User deleted successfully!');
     }
 }
+
