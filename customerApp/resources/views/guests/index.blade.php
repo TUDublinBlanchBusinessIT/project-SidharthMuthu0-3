@@ -6,8 +6,28 @@
         <a href="{{ route('guests.create') }}" class="btn btn-success">+ Add New Guest</a>
     </div>
 
+    {{-- ✅ Green Success Message (Create/Update) --}}
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    {{-- ❌ Red Deleted Message --}}
+    @if(session('deleted'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('deleted') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    {{-- ⚠️ Error Message --}}
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
 
     @if($guests->count())

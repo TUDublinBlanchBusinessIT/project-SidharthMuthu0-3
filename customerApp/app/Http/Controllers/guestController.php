@@ -7,9 +7,8 @@ use App\Http\Requests\UpdateguestRequest;
 use App\Repositories\guestRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
 use Response;
-use App\Models\Guest; // ✅ Make sure this is used if needed for direct model testing
+use App\Models\Guest;
 
 class guestController extends AppBaseController
 {
@@ -21,129 +20,74 @@ class guestController extends AppBaseController
         $this->guestRepository = $guestRepo;
     }
 
-    /**
-     * Display a listing of the guest.
-     *
-     * @param Request $request
-     * @return Response
-     */
     public function index(Request $request)
     {
         $guests = $this->guestRepository->all();
-
-        // DEBUG OPTION: Uncomment this line to test if data is loading
-        // dd($guests);
 
         return view('guests.index')
             ->with('guests', $guests);
     }
 
-    /**
-     * Show the form for creating a new guest.
-     *
-     * @return Response
-     */
     public function create()
     {
         return view('guests.create');
     }
 
-    /**
-     * Store a newly created guest in storage.
-     *
-     * @param CreateguestRequest $request
-     * @return Response
-     */
     public function store(CreateguestRequest $request)
     {
         $input = $request->all();
+        $this->guestRepository->create($input);
 
-        $guest = $this->guestRepository->create($input);
-
-        Flash::success('Guest saved successfully.');
-
-        return redirect(route('guests.index'));
+        return redirect()->route('guests.index')->with('success', 'Guest created successfully!');
     }
 
-    /**
-     * Display the specified guest.
-     *
-     * @param int $id
-     * @return Response
-     */
     public function show($id)
     {
         $guest = $this->guestRepository->find($id);
 
         if (empty($guest)) {
-            Flash::error('Guest not found');
-            return redirect(route('guests.index'));
+            return redirect()->route('guests.index')->with('error', 'Guest not found!');
         }
 
         return view('guests.show')->with('guest', $guest);
     }
 
-    /**
-     * Show the form for editing the specified guest.
-     *
-     * @param int $id
-     * @return Response
-     */
     public function edit($id)
     {
         $guest = $this->guestRepository->find($id);
 
         if (empty($guest)) {
-            Flash::error('Guest not found');
-            return redirect(route('guests.index'));
+            return redirect()->route('guests.index')->with('error', 'Guest not found!');
         }
 
         return view('guests.edit')->with('guest', $guest);
     }
 
-    /**
-     * Update the specified guest in storage.
-     *
-     * @param int $id
-     * @param UpdateguestRequest $request
-     * @return Response
-     */
     public function update($id, UpdateguestRequest $request)
     {
         $guest = $this->guestRepository->find($id);
 
         if (empty($guest)) {
-            Flash::error('Guest not found');
-            return redirect(route('guests.index'));
+            return redirect()->route('guests.index')->with('error', 'Guest not found!');
         }
 
-        $guest = $this->guestRepository->update($request->all(), $id);
+        $this->guestRepository->update($request->all(), $id);
 
-        Flash::success('Guest updated successfully.');
-
-        return redirect(route('guests.index'));
+        return redirect()->route('guests.index')->with('success', 'Guest updated successfully!');
     }
 
-    /**
-     * Remove the specified guest from storage.
-     *
-     * @param int $id
-     * @throws \Exception
-     * @return Response
-     */
     public function destroy($id)
     {
         $guest = $this->guestRepository->find($id);
 
         if (empty($guest)) {
-            Flash::error('Guest not found');
-            return redirect(route('guests.index'));
+            return redirect()->route('guests.index')->with('error', 'Guest not found!');
         }
 
         $this->guestRepository->delete($id);
 
-        Flash::success('Guest deleted successfully.');
-
-        return redirect(route('guests.index'));
+        // ✅ Use "deleted" key for red alert
+        return redirect()->route('guests.index')->with('deleted', 'Guest deleted successfully!');
     }
 }
+
