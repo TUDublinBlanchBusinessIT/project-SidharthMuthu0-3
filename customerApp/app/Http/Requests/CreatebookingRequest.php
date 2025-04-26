@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\booking;
 
 class CreatebookingRequest extends FormRequest
 {
@@ -24,6 +23,12 @@ class CreatebookingRequest extends FormRequest
      */
     public function rules()
     {
-        return booking::$rules;
+        return [
+            'guest_id' => 'required|exists:guest,id',
+            'room_number' => 'required|integer|min:1',
+            'check_in_date' => 'required|date',
+            'check_out_date' => 'required|date|after_or_equal:check_in_date',
+            'payment_status' => 'required|string|max:50',
+        ];
     }
 }

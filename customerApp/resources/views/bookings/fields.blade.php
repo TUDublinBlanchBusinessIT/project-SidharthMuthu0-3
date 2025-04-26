@@ -1,7 +1,7 @@
-<!-- Guest Id Field -->
+<!-- Guest Dropdown -->
 <div class="form-group col-sm-6">
-    {!! Form::label('guest_id', 'Guest Id:') !!}
-    {!! Form::number('guest_id', null, ['class' => 'form-control']) !!}
+    {!! Form::label('guest_id', 'Guest') !!}
+    {!! Form::select('guest_id', $guests, null, ['class' => 'form-control', 'placeholder' => '-- Select Guest --', 'required']) !!}
 </div>
 
 <!-- Room Number Field -->
@@ -28,8 +28,8 @@
     {!! Form::text('payment_status', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Submit Field -->
+<!-- Submit Buttons -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('bookings.index') !!}" class="btn btn-default">Cancel</a>
+    <a href="{!! route('bookings.index') !!}" class="btn btn-secondary">Cancel</a>
 </div>

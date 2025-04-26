@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatebookingRequest;
 use App\Repositories\bookingRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use App\Models\Guest;
 use Response;
 
 class bookingController extends AppBaseController
@@ -22,20 +23,26 @@ class bookingController extends AppBaseController
     public function index(Request $request)
     {
         $bookings = $this->bookingRepository->all();
+
         return view('bookings.index')->with('bookings', $bookings);
     }
 
     public function create()
     {
-        return view('bookings.create');
+        // Get guest list as ID => Full Name
+        $guests = Guest::all()->mapWithKeys(function ($guest) {
+            return [$guest->id => $guest->first_name . ' ' . $guest->last_name];
+        });
+
+        return view('bookings.create', compact('guests'));
     }
 
     public function store(CreatebookingRequest $request)
     {
-        $input = $request->all();
-        $this->bookingRepository->create($input);
+        $this->bookingRepository->create($request->all());
 
-        return redirect()->route('bookings.index')->with('success', 'Booking created successfully!');
+        return redirect()->route('bookings.index')
+                         ->with('success', 'Booking created successfully!');
     }
 
     public function show($id)
@@ -57,7 +64,11 @@ class bookingController extends AppBaseController
             return redirect()->route('bookings.index')->with('error', 'Booking not found!');
         }
 
-        return view('bookings.edit')->with('booking', $booking);
+        $guests = Guest::all()->mapWithKeys(function ($guest) {
+            return [$guest->id => $guest->first_name . ' ' . $guest->last_name];
+        });
+
+        return view('bookings.edit', compact('booking', 'guests'));
     }
 
     public function update($id, UpdatebookingRequest $request)
