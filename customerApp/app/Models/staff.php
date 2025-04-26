@@ -2,77 +2,54 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * Class staff
- * @package App\Models
- * @version April 16, 2025, 2:57 pm UTC
- *
- * @property string $first_name
- * @property string $last_name
- * @property string $position
- * @property string $phone_number
- * @property string $email
- * @property string $hire_date
- */
-class staff extends Model
+class Staff extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    use HasFactory;
-
-    public $table = 'staff';
-    
+    public $table = 'staff'; // your table name
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-
     protected $dates = ['deleted_at'];
 
-
-
-    public $fillable = [
+    protected $fillable = [
         'first_name',
         'last_name',
-        'position',
-        'phone_number',
         'email',
-        'hire_date'
+        'phone_number',
+        'position',
+        'hire_date',
     ];
-
-    /**
-     * The attributes that should be casted to native types.
-     *
-     * @var array
-     */
+    
     protected $casts = [
         'id' => 'integer',
-        'first_name' => 'string',
-        'last_name' => 'string',
-        'position' => 'string',
-        'phone_number' => 'string',
+        'name' => 'string',
         'email' => 'string',
-        'hire_date' => 'date'
+        'phone_number' => 'string',
+        'position' => 'string',
+        'is_active' => 'boolean',
+    ];
+
+    public static $rules = [
+        'name' => 'nullable|string|max:100',
+        'email' => 'nullable|email|max:100',
+        'phone_number' => 'nullable|string|max:20',
+        'position' => 'nullable|string|max:50',
+        'is_active' => 'nullable|boolean',
+        'created_at' => 'nullable',
+        'updated_at' => 'nullable',
+        'deleted_at' => 'nullable',
     ];
 
     /**
-     * Validation rules
-     *
-     * @var array
+     * Accessor for readable status
      */
-    public static $rules = [
-        'first_name' => 'nullable|string|max:50',
-        'last_name' => 'nullable|string|max:50',
-        'position' => 'nullable|string|max:50',
-        'phone_number' => 'nullable|string|max:15',
-        'email' => 'nullable|string|max:100',
-        'hire_date' => 'nullable',
-        'created_at' => 'nullable',
-        'updated_at' => 'nullable'
-    ];
-
-    
+    public function getStatusAttribute()
+    {
+        return $this->is_active ? 'Active' : 'Inactive';
+    }
 }
