@@ -2,48 +2,27 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * Class room
- * @package App\Models
- * @version April 16, 2025, 3:00 pm UTC
- *
- * @property integer $room_number
- * @property string $room_type
- * @property number $price
- * @property boolean $is_available
- */
-class room extends Model
+class Room extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    use HasFactory;
-
-    public $table = 'room';
-    
+    public $table = 'room'; // your table name
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-
     protected $dates = ['deleted_at'];
 
-
-
-    public $fillable = [
+    protected $fillable = [
         'room_number',
         'room_type',
         'price',
         'is_available'
     ];
 
-    /**
-     * The attributes that should be casted to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'id' => 'integer',
         'room_number' => 'integer',
@@ -52,19 +31,21 @@ class room extends Model
         'is_available' => 'boolean'
     ];
 
-    /**
-     * Validation rules
-     *
-     * @var array
-     */
     public static $rules = [
         'room_number' => 'nullable|integer',
         'room_type' => 'nullable|string|max:50',
         'price' => 'nullable|numeric',
         'is_available' => 'nullable|boolean',
         'created_at' => 'nullable',
-        'updated_at' => 'nullable'
+        'updated_at' => 'nullable',
+        'deleted_at' => 'nullable',
     ];
 
-    
+    /**
+     * Accessor for readable status
+     */
+    public function getStatusAttribute()
+    {
+        return $this->is_available ? 'Available' : 'Unavailable';
+    }
 }
