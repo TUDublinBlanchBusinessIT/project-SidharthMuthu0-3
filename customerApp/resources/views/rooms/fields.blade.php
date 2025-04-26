@@ -1,32 +1,27 @@
-<!-- Room Number Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('room_number', 'Room Number:') !!}
-    {!! Form::number('room_number', null, ['class' => 'form-control']) !!}
+<!-- Room Number -->
+<div class="mb-3">
+    {!! Form::label('room_number', 'Room Number', ['class' => 'form-label']) !!}
+    {!! Form::number('room_number', null, ['class' => 'form-control', 'required' => true]) !!}
 </div>
 
-<!-- Room Type Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('room_type', 'Room Type:') !!}
-    {!! Form::text('room_type', null, ['class' => 'form-control']) !!}
+<!-- Room Type -->
+<div class="mb-3">
+    {!! Form::label('room_type', 'Room Type', ['class' => 'form-label']) !!}
+    {!! Form::text('room_type', null, ['class' => 'form-control', 'required' => true]) !!}
 </div>
 
-<!-- Price Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('price', 'Price:') !!}
-    {!! Form::number('price', null, ['class' => 'form-control']) !!}
+<!-- Price -->
+<div class="mb-3">
+    {!! Form::label('price', 'Price ($)', ['class' => 'form-label']) !!}
+    {!! Form::number('price', null, ['class' => 'form-control', 'step' => '0.01', 'required' => true]) !!}
 </div>
 
-<!-- Is Available Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('is_available', 'Is Available:') !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('is_available', false) !!}
-        {!! Form::checkbox('is_available', 1, null) !!} $VALUE$
-    </label>
-</div>
-
-<!-- Submit Field -->
-<div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('rooms.index') !!}" class="btn btn-default">Cancel</a>
+<!-- Is Available -->
+<div class="mb-3">
+    {!! Form::label('is_available', 'Available?', ['class' => 'form-label d-block']) !!}
+    <div class="form-check form-switch">
+        {!! Form::hidden('is_available', 0) !!}
+        {!! Form::checkbox('is_available', 1, null, ['class' => 'form-check-input', 'id' => 'is_available']) !!}
+        <label class="form-check-label" for="is_available">Yes</label>
+    </div>
 </div>
