@@ -17,7 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
+require __DIR__.'/auth.php';
 Route::resource('guests', App\Http\Controllers\guestController::class);
 
 
@@ -30,4 +34,3 @@ Route::resource('staff', App\Http\Controllers\staffController::class);
 Route::resource('rooms', App\Http\Controllers\roomController::class);
 
 Route::resource('users', App\Http\Controllers\UserController::class);
-
