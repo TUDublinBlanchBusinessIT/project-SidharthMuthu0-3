@@ -54,24 +54,27 @@
                                 <td>{{ $booking->check_in_date }}</td>
                                 <td>{{ $booking->check_out_date }}</td>
                                 <td>
-                                    @if($booking->payment_status == 'paid')
+                                    @if($booking->payment_status === 'paid')
                                         <span class="badge bg-success">Paid</span>
-                                    @elseif($booking->payment_status == 'pending')
-                                        <span class="badge bg-warning text-dark">Pending</span>
-                                    @elseif($booking->payment_status == 'failed')
-                                        <span class="badge bg-danger">Failed</span>
                                     @else
-                                        <span class="badge bg-secondary">{{ ucfirst($booking->payment_status ?? 'N/A') }}</span>
+                                        <span class="badge bg-danger">Pending</span>
                                     @endif
                                 </td>
                                 <td>{{ $booking->created_at->format('Y-m-d') }}</td>
                                 <td class="d-flex justify-content-center gap-2">
-                                    <a href="{{ route('bookings.edit', $booking->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                    <form method="POST" action="{{ route('bookings.destroy', $booking->id) }}" onsubmit="return confirm('Are you sure you want to delete this booking?');">
+
+                                    {{-- Edit Button --}}
+                                    <form action="{{ route('bookings.edit', $booking->id) }}" method="GET" style="display:inline;">
+                                        <button type="submit" class="btn btn-sm btn-primary">Edit</button>
+                                    </form>
+
+                                    {{-- Delete Button --}}
+                                    <form method="POST" action="{{ route('bookings.destroy', $booking->id) }}" onsubmit="return confirm('Are you sure you want to delete this booking?');" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                     </form>
+
                                 </td>
                             </tr>
                         @endforeach

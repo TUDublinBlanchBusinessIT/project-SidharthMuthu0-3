@@ -6,6 +6,7 @@
         <a href="{{ route('rooms.create') }}" class="btn btn-success">+ Add New Room</a>
     </div>
 
+    {{-- Flash Messages --}}
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
@@ -48,7 +49,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $room->room_number }}</td>
                                 <td>{{ $room->room_type }}</td>
-                                <td>€{{ number_format($room->price, 2) }}</td> <!-- Changed $ to € -->
+                                <td>€{{ number_format($room->price, 2) }}</td>
                                 <td>
                                     <span class="badge {{ $room->is_available ? 'bg-success' : 'bg-secondary' }}">
                                         {{ $room->is_available ? 'Available' : 'Unavailable' }}
@@ -56,12 +57,19 @@
                                 </td>
                                 <td>{{ $room->created_at->format('Y-m-d') }}</td>
                                 <td class="d-flex justify-content-center gap-2">
-                                    <a href="{{ route('rooms.edit', $room->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                    <form method="POST" action="{{ route('rooms.destroy', $room->id) }}" onsubmit="return confirm('Are you sure you want to delete this room?');">
+
+                                    {{-- Edit Button --}}
+                                    <form action="{{ route('rooms.edit', $room->id) }}" method="GET" style="display:inline;">
+                                        <button type="submit" class="btn btn-sm btn-primary">Edit</button>
+                                    </form>
+
+                                    {{-- Delete Button --}}
+                                    <form method="POST" action="{{ route('rooms.destroy', $room->id) }}" onsubmit="return confirm('Are you sure you want to delete this room?');" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                     </form>
+
                                 </td>
                             </tr>
                         @endforeach
