@@ -1,8 +1,7 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ config('app.name', 'Laravel App') }}</title>
+    <title>{{ config('app.name', 'Hotel Admin') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap 5 -->
@@ -23,16 +22,28 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container">
             <a class="navbar-brand" href="/">Hotel Admin</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a href="{{ route('guests.index') }}" class="nav-link">Guests</a></li>
-                    <li class="nav-item"><a href="{{ route('bookings.index') }}" class="nav-link">Bookings</a></li>
-                    <li class="nav-item"><a href="{{ route('rooms.index') }}" class="nav-link">Rooms</a></li>
-                    <li class="nav-item"><a href="{{ route('staff.index') }}" class="nav-link">Staff</a></li>
-                    <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link">Users</a></li>
+                <ul class="navbar-nav me-auto"> <!-- ✅ Changed from ms-auto to me-auto -->
+                    <li class="nav-item">
+                        <a href="{{ route('guests.index') }}" class="nav-link">Guests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('bookings.index') }}" class="nav-link">Bookings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('rooms.index') }}" class="nav-link">Rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('staff.index') }}" class="nav-link">Staff</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('users.index') }}" class="nav-link">Users</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -47,3 +58,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
