@@ -54,10 +54,18 @@
                                 <td>{{ $booking->check_in_date }}</td>
                                 <td>{{ $booking->check_out_date }}</td>
                                 <td>
-                                    @if($booking->payment_status === 'paid')
+                                    @php
+                                        $status = strtolower($booking->payment_status);
+                                    @endphp
+
+                                    @if($status === 'paid')
                                         <span class="badge bg-success">Paid</span>
+                                    @elseif($status === 'pending')
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    @elseif($status === 'failed')
+                                        <span class="badge bg-danger">Failed</span>
                                     @else
-                                        <span class="badge bg-danger">Pending</span>
+                                        <span class="badge bg-secondary">Unknown</span>
                                     @endif
                                 </td>
                                 <td>{{ $booking->created_at->format('Y-m-d') }}</td>
