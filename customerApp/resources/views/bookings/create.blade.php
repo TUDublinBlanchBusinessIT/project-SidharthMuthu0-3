@@ -48,10 +48,15 @@
             <input type="date" name="check_out_date" id="check_out_date" class="form-control" required>
         </div>
 
-        {{-- Payment Status --}}
+        {{-- Payment Status (Dropdown) --}}
         <div class="mb-3">
             <label for="payment_status" class="form-label">Payment Status</label>
-            <input type="text" name="payment_status" id="payment_status" class="form-control" required>
+            <select name="payment_status" id="payment_status" class="form-select" required>
+                <option value="">-- Select Payment Status --</option>
+                <option value="paid">Paid</option>
+                <option value="pending">Pending</option>
+                <option value="failed">Failed</option>
+            </select>
         </div>
 
         {{-- Submit Button --}}
