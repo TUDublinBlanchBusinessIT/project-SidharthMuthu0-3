@@ -31,16 +31,21 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- Left Menu -->
+                <!-- Left side navigation -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a href="{{ route('guests.index') }}" class="nav-link">Guests</a></li>
                     <li class="nav-item"><a href="{{ route('bookings.index') }}" class="nav-link">Bookings</a></li>
                     <li class="nav-item"><a href="{{ route('rooms.index') }}" class="nav-link">Rooms</a></li>
                     <li class="nav-item"><a href="{{ route('staff.index') }}" class="nav-link">Staff</a></li>
-                    <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link">Users</a></li>
+                    
+                    @auth
+                        @if(Auth::user()->role === 'admin')
+                            <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link">Users</a></li>
+                        @endif
+                    @endauth
                 </ul>
 
-                <!-- Right Menu -->
+                <!-- Right side auth links -->
                 <ul class="navbar-nav">
                     @auth
                         <li class="nav-item">
@@ -83,7 +88,7 @@
         @yield('content')
     </div>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

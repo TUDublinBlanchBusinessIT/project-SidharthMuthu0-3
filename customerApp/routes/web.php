@@ -1,16 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\guestController;
+use App\Http\Controllers\bookingController;
+use App\Http\Controllers\staffController;
+use App\Http\Controllers\roomController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
 Route::get('/', function () {
@@ -22,20 +24,19 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
-Route::resource('guests', App\Http\Controllers\guestController::class);
 
+// Normal Authenticated Routes
+Route::middleware(['auth'])->group(function () {
+    Route::resource('guests', guestController::class);
+    Route::resource('bookings', bookingController::class);
+    Route::resource('staff', staffController::class);
+    Route::resource('rooms', roomController::class);
 
-Route::resource('bookings', App\Http\Controllers\bookingController::class);
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
 
-
-Route::resource('staff', App\Http\Controllers\staffController::class);
-
-
-Route::resource('rooms', App\Http\Controllers\roomController::class);
-
-Route::resource('users', App\Http\Controllers\UserController::class);
-
-Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
-
-Route::post('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
-
+// ✅ Protect Users Routes: Only for Admins
+Route::middleware(['auth'])->group(function () {
+    Route::resource('users', UserController::class)->middleware('admin.only');
+});
