@@ -1,25 +1,26 @@
-<ul class="navbar-nav ms-auto align-items-center">
-    @guest
-        <!-- When not logged in -->
+@if (Auth::check())
+    <div class="d-flex align-items-center gap-3">
+        <span class="navbar-text text-white">
+            Welcome, {{ Auth::user()->name }}
+        </span>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-outline-light btn-sm">
+                <i class="fas fa-sign-out-alt"></i> Logoff
+            </button>
+        </form>
+    </div>
+@else
+    <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('register') }}">
-                <i class="fas fa-user-plus"></i> Register
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('login') }}">
+            <a href="{{ route('login') }}" class="nav-link">
                 <i class="fas fa-sign-in-alt"></i> Login
             </a>
         </li>
-    @else
-        <!-- When logged in -->
         <li class="nav-item">
-            <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                @csrf
-                <button type="submit" class="nav-link btn btn-link text-white" style="text-decoration: none; padding: 0 10px; font-size: 1.25rem;">
-                    <i class="fas fa-sign-out-alt"></i>
-                </button>
-            </form>
+            <a href="{{ route('register') }}" class="nav-link">
+                <i class="fas fa-user-plus"></i> Register
+            </a>
         </li>
-    @endguest
-</ul>
+    </ul>
+@endif
