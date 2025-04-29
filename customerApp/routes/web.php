@@ -34,3 +34,8 @@ Route::resource('staff', App\Http\Controllers\staffController::class);
 Route::resource('rooms', App\Http\Controllers\roomController::class);
 
 Route::resource('users', App\Http\Controllers\UserController::class);
+
+Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+
+Route::post('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+
